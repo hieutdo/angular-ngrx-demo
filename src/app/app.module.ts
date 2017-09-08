@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { AppComponent } from './app.component';
 import { ThreadsService } from './services/threads/threads.service';
 import { ThreadSectionComponent } from './components/thread-section/thread-section.component';
+import { INITIAL_APPLICATION_STATE } from './store/application-state';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { ThreadSectionComponent } from './components/thread-section/thread-secti
   imports: [
     BrowserModule,
     HttpModule,
-    StoreModule.forRoot({})
+    StoreModule.forRoot({}, INITIAL_APPLICATION_STATE)
   ],
   providers: [ThreadsService],
   bootstrap: [AppComponent]
