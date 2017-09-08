@@ -1,2 +1,11 @@
-<h3>User: {{ username$ | async }}</h3>
-<h3>Unread messages: {{ unreadMessagesCount$ | async }}</h3>
+<div class="thread-section">
+  <div class="thread-count">
+    <span>
+      <h3>User: {{username$ | async}}</h3>
+    </span>
+    <span class="unread-messages-counter"
+          [ngClass]="{unread: (unreadMessagesCount$ | async) > 0 }">
+      Unread messages: {{unreadMessagesCount$ | async}}
+    </span>
+  </div>
+</div>

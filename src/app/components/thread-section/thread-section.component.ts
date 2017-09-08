@@ -7,6 +7,7 @@ import { Thread } from '../../../../shared/model/thread';
 import { ThreadsService } from '../../services/threads/threads.service';
 import { LoadUserThreadsAction } from '../../store/actions';
 import { ApplicationState } from '../../store/application-state';
+import { ThreadSummaryVM } from './thread-summary-vm';
 
 @Component({
   selector: 'app-thread-section',
@@ -16,6 +17,7 @@ import { ApplicationState } from '../../store/application-state';
 export class ThreadSectionComponent implements OnInit {
   username$: Observable<string>;
   unreadMessagesCount$: Observable<number>;
+  threadSummaryList$: Observable<ThreadSummaryVM[]>;
 
   constructor(
     private store: Store<ApplicationState>,
@@ -25,6 +27,9 @@ export class ThreadSectionComponent implements OnInit {
     this.unreadMessagesCount$ = store
       .skip(1)
       .map(this.mapStateToUnreadMessagesCount);
+    this.threadSummaryList$ = store.select<ThreadSummaryVM[]>(
+      this.mapStateToThreadSummaryList
+    );
   }
 
   mapStateToUsername(state: ApplicationState): string {
@@ -39,6 +44,24 @@ export class ThreadSectionComponent implements OnInit {
       (acc, thread) => acc + thread.participants[userId],
       0
     );
+  }
+
+  mapStateToThreadSummaryList(state: ApplicationState): ThreadSummaryVM[] {
+    const threads = _.values(state.storeData.threads);
+    return threads.map(thread => {
+      const names = _.keys(thread.participants).map(
+        id => state.storeData.participants[id].name
+      );
+      const lastMessageId = _.last(thread.messageIds);
+      const lastMessage = state.storeData.messages[lastMessageId];
+      return {
+        id: thread.id,
+        participantNames: _.join(names, ','),
+        lastMessageText: lastMessage.text,
+        timestamp: lastMessage.timestamp,
+        read: false,
+      };
+    });
   }
 
   ngOnInit() {
