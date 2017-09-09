@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/switchMap';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';

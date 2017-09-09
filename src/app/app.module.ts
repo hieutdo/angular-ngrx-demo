@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
@@ -8,6 +9,7 @@ import { ThreadListComponent } from './components/thread-list/thread-list.compon
 import { ThreadSectionComponent } from './components/thread-section/thread-section.component';
 import { ThreadsService } from './services/threads/threads.service';
 import { INITIAL_APPLICATION_STATE } from './store/application-state';
+import { ThreadsEffectService } from './store/effects/threads-effect/threads-effect.service';
 import { storeReducer, uiReducer } from './store/reducers';
 
 const reducersMap = { uiState: uiReducer, storeData: storeReducer };
@@ -20,6 +22,7 @@ const reducersMap = { uiState: uiReducer, storeData: storeReducer };
     StoreModule.forRoot(reducersMap, {
       initialState: INITIAL_APPLICATION_STATE,
     }),
+    EffectsModule.forRoot([ThreadsEffectService]),
   ],
   providers: [ThreadsService],
   bootstrap: [AppComponent],

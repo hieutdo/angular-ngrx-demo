@@ -12,7 +12,7 @@ export function uiReducer(state: UiState, action: Action): UiState {
 
 export function storeReducer(state: StoreData, action: Action): StoreData {
   switch (action.type) {
-    case actions.LOAD_USER_THREADS: {
+    case actions.USER_THREADS_LOADED: {
       const newState = Object.assign({}, state);
       const { payload } = action;
       newState.messages = _.keyBy(payload.messages, 'id');
