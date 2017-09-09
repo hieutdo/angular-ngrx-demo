@@ -14,6 +14,9 @@ export class ThreadsEffectService {
   @Effect()
   userThreads$ = this.actions$
     .ofType(LOAD_USER_THREADS)
+    .debug('userThreads: action received')
     .switchMap(() => this.threadService.loadUserThreads(1))
-    .map(allUserData => new UserThreadsLoadedAction(allUserData));
+    .debug('userThreads: data received from server')
+    .map(allUserData => new UserThreadsLoadedAction(allUserData))
+    .debug('userThreads: action dispatched');
 }
