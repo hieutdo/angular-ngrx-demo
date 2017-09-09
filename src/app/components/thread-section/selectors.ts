@@ -5,7 +5,10 @@ import { ApplicationState } from '../../store/application-state';
 import { ThreadSummaryVM } from './thread-summary-vm';
 
 export function selectUsername(state: ApplicationState): string {
-  return state.storeData.participants[state.uiState.userId].name;
+  const { userId } = state.uiState;
+  const participant = state.storeData.participants[userId];
+
+  return participant ? participant.name : '<Unknown>';
 }
 
 export function selectUnreadMessagesCount(state: ApplicationState): number {

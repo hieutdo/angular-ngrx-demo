@@ -3,6 +3,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { ThreadListComponent } from './components/thread-list/thread-list.component';
@@ -23,6 +24,7 @@ const reducersMap = { uiState: uiReducer, storeData: storeReducer };
       initialState: INITIAL_APPLICATION_STATE,
     }),
     EffectsModule.forRoot([ThreadsEffectService]),
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [ThreadsService],
   bootstrap: [AppComponent],
